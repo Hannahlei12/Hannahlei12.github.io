@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Rock, paper, scissors</title>
+  </head>
+    
+  <body>
+      
+      <h1>Rock, Paper, Scissors</h1>
+
+    <a href="#" onclick="doTurn('rock');">Choose rock</a><br>
+    <a href="#" onclick="doTurn('paper');">Choose paper</a><br>
+    <a href="#" onclick="doTurn('scissors');">Choose scissors</a><br>
+    <div id="output">   </div>
+      
+    <script>
+      /* TODO: 
+        -user input
+        -score increments
+        -add output other than console
+        -move script to external file
+      */
+
+      // string variables to hold possible choices
+      // we'll use these later on
+      var choice1 = "rock";
+      var choice2 = "paper";
+      var choice3 = "scissors";
+
+      // number variables to hold the scores
+      var humanScore = 0;
+      var computerScore = 0;
+      
+      // string variables to hold the choices
+      var humanChoice = "";
+      var computerChoice = "";
+        
+      function doTurn(humanChoice) {
+         computerChoice = "paper"; // try changing these values to test!
+         
+         if (humanChoice === computerChoice) { // Draw
+            console.log("Draw!"); 
+            output = "Draw!"
+         }
+         else if (humanChoice === "rock" && computerChoice === "scissors" ||
+                 humanChoice === "scissors" && computerChoice === "paper" ||
+                 humanChoice === "paper" && computerChoice === "rock") { 
+                 // Human won
+            console.log("You win!"); 
+            output = "You Win!"
+            humanScore = humanScore +1;
+         }
+         else { // Human lost--no need to check by process of elimination
+            console.log("You lose!");
+             output = "You lose!";
+             computerScore = computerScore +1;
+         }
+         
+        output += "<br>"computerScore + humanScore;
+         
+         // Write the output string to the div element "output"
+         document.getElementById("output").innerHTML = output;
+      }
+      
+        
+        
+    </script>
+    
+  </body>
+</html>
