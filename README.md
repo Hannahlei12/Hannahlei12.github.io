@@ -1,3 +1,3 @@
 # Hannahlei12.github.io
 
-[RPS](rps.md)
+[RPS](rps.html)
