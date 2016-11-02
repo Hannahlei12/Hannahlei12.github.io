@@ -4,29 +4,65 @@
   <head>
     <title>Rock, paper, scissors</title>
   </head>
-    
   <body>
+    
+    <!-- start body HTML content-->
+    
+    <h1>Rock, paper, scissors</h1>
       
-      <h1>Rock, Paper, Scissors</h1>
+    <!-- here's our user selection.  what if we add <img> tags instead of text? -->
+    <a href="#" onclick="doTurn('rock');">
+        <img src="http://www.clker.com/cliparts/f/T/O/n/C/g/angry-rock-md.png"/>    
+      </a>
+    <a href="#" onclick="doTurn('paper');">
+        <img src="http://st.depositphotos.com/1742172/2155/v/950/depositphotos_21550509-stock-illustration-cartoon-happy-paper-character.jpg"/>
+      </a>
+    <a href="#" onclick="doTurn('scissors');">
+        <img src="http://vectortoons.com/wp-content/uploads/2015/05/scissors-emoji-collection-006.jpg"/>
+      </a>
+    
+    <p></p>
 
-    <a href="#" onclick="doTurn('rock');">Choose rock</a><br>
-    <a href="#" onclick="doTurn('paper');">Choose paper</a><br>
-    <a href="#" onclick="doTurn('scissors');">Choose scissors</a><br>
-    <div id="output">   </div>
+    <!-- this div will hold our output string 
+         and display it to the user -->
+    <div id="output"></div>
+
+    <!--end body HTML content-->
+
+
+
+    <!-- begin JS code -->
+      <style>
+          img {
+              height: auto;
+              width: 400px;
+              margin-left: auto;
+              margin-right: auto;
+          }
+          body{
+              text-align: center;
+              
+          }
+          
+              background-image: url("https://i.ytimg.com/vi/aGpxtHJHUds/maxresdefault.jpg");
+          
+      </style>
       
     <script>
       /* TODO: 
-        -user input
-        -score increments
-        -add output other than console
-        -move script to external file
+        -improve user interface (UI--add graphics?)
+        -move script to external file.
+        
+        COMPLETED:
+        -implement AI.
+        -add a match win conditional such as "first to 5 wins".
+        -user input, although we could add images.
+        -score increments.
+        -add output other than console.
       */
 
-      // string variables to hold possible choices
-      // we'll use these later on
-      var choice1 = "rock";
-      var choice2 = "paper";
-      var choice3 = "scissors";
+      // string array to hold possible choices
+      var choices = [ "rock", "paper", "scissors" ];
 
       // number variables to hold the scores
       var humanScore = 0;
@@ -35,37 +71,78 @@
       // string variables to hold the choices
       var humanChoice = "";
       var computerChoice = "";
-        
-      function doTurn(humanChoice) {
-         computerChoice = "paper"; // try changing these values to test!
-         
-         if (humanChoice === computerChoice) { // Draw
-            console.log("Draw!"); 
-            output = "Draw!"
-         }
-         else if (humanChoice === "rock" && computerChoice === "scissors" ||
-                 humanChoice === "scissors" && computerChoice === "paper" ||
-                 humanChoice === "paper" && computerChoice === "rock") { 
-                 // Human won
-            console.log("You win!"); 
-            output = "You Win!"
-            humanScore = humanScore +1;
-         }
-         else { // Human lost--no need to check by process of elimination
-            console.log("You lose!");
-             output = "You lose!";
-             computerScore = computerScore +1;
-         }
-         
-        output += "<br>"computerScore + humanScore;
-         
-         // Write the output string to the div element "output"
-         document.getElementById("output").innerHTML = output;
+      
+      // variable to hold our output
+      var output = "";
+
+      // returns a random computer choice
+      function getComputerChoice(hc) {
+        /*    
+        // an "always wins" AI implementation
+        if (hc === "rock") {
+          return "paper";
+        }
+        else if (hc === "paper") {
+          return "scissors";
+        }
+        else {
+          return "rock";
+        }*/
+
+        // a 
+        return choices[Math.floor(Math.random() * choices.length)];
       }
       
+      // this function performs one round of rock, paper, scissors
+      function doTurn(humanChoice) {
+         
+        // call the getComputerChoice function
+        computerChoice = getComputerChoice(humanChoice);
         
+        if (humanChoice === computerChoice) { // Draw
+           output = "You both picked " + humanChoice + ".  Draw!";
+        }
+        else if ((humanChoice === "rock" && computerChoice === "scissors") ||
+                 (humanChoice === "scissors" && computerChoice === "paper") ||
+                 (humanChoice === "paper" && computerChoice === "rock")) { 
+                 // Human won
+           output = "Your " + humanChoice + " beats computer's " + computerChoice;
+           
+           // Increment the human's score by 1
+           humanScore++; // same as: humanScore = humanScore + 1;
+                         // same as: humanScore += 1;
+        }
+        else { // Human lost--no need to check by process of elimination
+           output = "You lose!";
+
+           // Increment the computer's score by 1
+           computerScore++;
+           output = "Your " + humanChoice + " lost to computer's " + computerChoice;
+        }
+       
+
+        // Use the += operator to add more HTML to the "output" string
+        output += "<br>Human score: " + humanScore
+                + "<br>Computer score: " + computerScore;
         
+        if (humanScore >= 10) {
+          humanScore = 0;
+          computerScore = 0;
+          output += "<br>You win!";
+        }
+        else if (computerScore >= 10) {
+          humanScore = 0;
+          computerScore = 0;
+          output += "<br>You lose!";
+        }         
+        
+        // Write the output string to the div element with id "output"
+        document.getElementById("output").innerHTML = output;
+      }
+      
     </script>
+    
+    <!-- end JS code -->
     
   </body>
 </html>
